@@ -1,11 +1,11 @@
 import random
 
+import services.stat_game
 from lexicon.lexicon_ru import LEXICON_RU
-
 
 # Функция, возвращающая случайный выбор бота в игре
 def get_bot_choice() -> str:
-    return random.choice(['rock', 'paper', 'scissors'])
+    return random.choice(['rock', 'paper', 'scissors', 'lizard', 'spoke'])
 
 
 # Функция, возвращающая ключ из словаря, по которому
@@ -22,7 +22,15 @@ def get_winner(user_choice: str, bot_choice: str) -> str:
     user_choice = _normalize_user_answer(user_choice)
     rules: dict[str, str] = {'rock': 'scissors',
                              'scissors': 'paper',
-                             'paper': 'rock'}
+                             'rock': 'lizard',
+                             'lizard': 'spoke',
+                             'spoke': 'scissors',
+                             'scissors': 'lizard',
+                             'lizard': 'paper',
+                             'paper': 'spoke',
+                             'spoke': 'rock',
+                             'paper': 'spoke'
+                             }
     if user_choice == bot_choice:
         return 'nobody_won'
     elif rules[user_choice] == bot_choice:

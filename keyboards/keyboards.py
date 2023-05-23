@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
-
+import services.services
 from lexicon.lexicon_ru import LEXICON_RU
 
 # ------- Создаем клавиатуру через ReplyKeyboardBuilder -------
@@ -8,12 +8,13 @@ from lexicon.lexicon_ru import LEXICON_RU
 # Создаем кнопки с ответами согласия и отказа
 button_yes: KeyboardButton = KeyboardButton(text=LEXICON_RU['yes_button'])
 button_no: KeyboardButton = KeyboardButton(text=LEXICON_RU['no_button'])
+button_stat: KeyboardButton = KeyboardButton(text=LEXICON_RU['stat_button'])
 
 # Инициализируем билдер для клавиатуры с кнопками "Давай" и "Не хочу!"
 yes_no_kb_builder: ReplyKeyboardBuilder = ReplyKeyboardBuilder()
 
 # Добавляем кнопки в билдер с параметром width=2
-yes_no_kb_builder.row(button_yes, button_no, width=2)
+yes_no_kb_builder.row(button_yes, button_no, button_stat, width=3)
 
 # Создаем клавиатуру с кнопками "Давай!" и "Не хочу!"
 yes_no_kb = yes_no_kb_builder.as_markup(
@@ -27,7 +28,7 @@ button_1: KeyboardButton = KeyboardButton(text=LEXICON_RU['rock'])
 button_2: KeyboardButton = KeyboardButton(text=LEXICON_RU['scissors'])
 button_3: KeyboardButton = KeyboardButton(text=LEXICON_RU['paper'])
 button_4: KeyboardButton = KeyboardButton(text=LEXICON_RU['lizard'])
-button_5: KeyboardButton = KeyboardButton(text=LEXICON_RU['spock'])
+button_5: KeyboardButton = KeyboardButton(text=LEXICON_RU['spoke'])
 
 # Создаем игровую клавиатуру с кнопками "Камень 🗿",
 # "Ножницы ✂" и "Бумага 📜" как список списков
