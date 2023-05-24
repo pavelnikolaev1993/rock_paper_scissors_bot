@@ -29,8 +29,8 @@ def get_winner(user_choice: str, bot_choice: str) -> str:
                              'lizard': 'paper',
                              'paper': 'spoke',
                              'spoke': 'rock',
-                             'paper': 'spoke'
-                             }
+                             'paper': 'rock'
+                                                         }
     if user_choice == bot_choice:
         return 'nobody_won'
     elif rules[user_choice] == bot_choice:

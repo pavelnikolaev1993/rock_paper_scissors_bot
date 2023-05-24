@@ -15,6 +15,11 @@ router: Router = Router()
 @router.message(CommandStart())
 async def process_start_command(message: Message):
     await message.answer(text=LEXICON_RU['/start'], reply_markup=yes_no_kb)
+    if message.from_user.id not in services.stat_game.users:
+        services.stat_game.users[message.from_user.id] = {
+                                       'total_games': 0,
+                                       'bot_wins': 0,
+                                       'user_wins': 0}
 
 
 # Этот хэндлер срабатывает на команду /help
@@ -37,8 +42,9 @@ async def process_no_answer(message: Message):
 # Этот хэндлер срабатывает на статистику
 @router.message(Text(text=LEXICON_RU['stat_button']))
 async def process_stat(message: Message):
-    await message.answer(f'Сыграно игр - {services.stat_game.game_count}. '
-                         f'Счёт {services.stat_game.me_win} : {services.stat_game.bot_win}', reply_markup=yes_no_kb)
+    await message.answer(f"Сыграно игр - {services.stat_game.users[message.from_user.id]['total_games']}. "
+                         f"Счёт {services.stat_game.users[message.from_user.id]['user_wins']} "
+                         f": {services.stat_game.users[message.from_user.id]['bot_wins']}", reply_markup=yes_no_kb)
 
 
 # Этот хэндлер срабатывает на любую из игровых кнопок
@@ -55,8 +61,8 @@ async def process_game_button(message: Message):
                               f'- {LEXICON_RU[bot_choice]}')
     winner = get_winner(message.text, bot_choice)
     if winner == 'user_won':
-        services.stat_game.me_win +=1
+        services.stat_game.users[message.from_user.id]['user_wins'] +=1
     elif winner == 'bot_won':
-        services.stat_game.bot_win +=1
-    services.stat_game.game_count +=1
+        services.stat_game.users[message.from_user.id]['bot_wins'] +=1
+    services.stat_game.users[message.from_user.id]['total_games'] +=1
     await message.answer(text=LEXICON_RU[winner], reply_markup=yes_no_kb)
